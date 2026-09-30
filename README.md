@@ -161,7 +161,7 @@ Planned (Analytics module): dashboard summary, category-wise expense breakdown, 
 |---|---|
 | Project setup, MongoDB connection | Done |
 | Authentication module | Done, tested with Thunder Client |
-| Accounts module | Implemented, testing in progress |
+| Accounts module | Done, tested with Thunder Client (create, edit, delete, invalid token) |
 | Transactions and Categories module | Not started |
 | Analytics module | Not started |
 | Jest tests for balance logic | Not started |
