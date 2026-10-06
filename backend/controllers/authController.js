@@ -58,7 +58,6 @@ exports.forgotPassword = async (req, res) => {
     user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
     await user.save();
 
-    // v1: token surfaced directly (FR-1.7). Real SMTP would send this instead.
     res.json({ ...generic, resetToken: rawToken });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
