@@ -13,6 +13,7 @@ app.use("/api/v1/accounts", require("./routes/accountRoute"));
 app.use("/api/v1/categories", require("./routes/categoryRoute"));
 app.use("/api/v1/transactions", require("./routes/transactionRoute"));
 app.use("/api/v1/analytics", require("./routes/analyticsRoute"));
+app.use("/api/v1/admin",require("./routes/adminRoute"));
 
 const PORT = process.env.PORT || 5000;
 if (require.main === module) {
