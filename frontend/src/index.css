@@ -122,3 +122,20 @@ tbody tr:hover { background: #f7faf9; } tbody tr:last-child td { border-bottom: 
   .top-links { display: none; position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; background: #fff; padding: 10px 16px; border-bottom: 1px solid var(--line); margin: 0; } .top-links.open { display: flex; }
   .topbar .wrap { flex-wrap: nowrap; } .user-box { margin-left: auto; } .nav-cta .btn-outline { display: none; } .site-foot .row-between { flex-direction: column; gap: 6px; text-align: center; }
 }
+
+/* ===== Budgets ===== */
+.big-num { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.budget { display: flex; flex-direction: column; gap: 10px; border-top: 3px solid var(--pine); }
+.budget-over { border-top-color: var(--expense); }
+.progress { height: 10px; border-radius: 99px; background: var(--mist); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 99px; background: var(--income); transition: width .4s ease; }
+.progress-fill.over { background: var(--expense); }
+.budget-warning { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 16px; }
+.budget-warning ul { margin: 6px 0 0; padding-left: 18px; }
+.budget-warning > span { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+
+.site-nav .brand, .topbar .brand { display: flex; align-items: center; gap: 10px; }
+.brand-logo { width: 34px; height: 34px; }
+
+
+.table-scroll { overflow-x: auto; }

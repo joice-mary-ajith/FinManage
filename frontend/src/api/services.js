@@ -52,3 +52,9 @@ export const adminApi = {
   updateCategory: (id, body) => data(api.put(`/admin/categories/${id}`, body)),
   removeCategory: (id) => data(api.delete(`/admin/categories/${id}`)),
 };
+
+export const budgetApi = {
+  list: () => data(api.get("/budgets")),
+  save: (body) => data(api.put("/budgets", body)), // { categoryId, amount }
+  remove: (id) => data(api.delete(`/budgets/${id}`)),
+};

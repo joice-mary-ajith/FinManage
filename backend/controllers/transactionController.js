@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Transaction = require("../models/transactionModel");
 const Account = require("../models/accountModel");
 const Category = require("../models/categoryModel");
+const { checkBudget } = require("../services/budgetService");
 
 // returns an error message string, or null if the input is fine
 const validateInput = async (userId, { amount, type, categoryId, accountId, date }) => {
@@ -32,7 +33,8 @@ exports.createTransaction = async (req, res) => {
     const txn = await Transaction.create({
       userId: req.user._id, amount: Number(amount), type, categoryId, accountId, date, notes,
     });
-    res.status(201).json(txn);
+    const budgetAlert = await checkBudget(txn); // null unless this expense pushed the category over its monthly budget
+    res.status(201).json({ ...txn.toObject(), budgetAlert });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
@@ -75,7 +77,8 @@ exports.updateTransaction = async (req, res) => {
       { new: true, runValidators: true }
     );
     if (!txn) return res.status(404).json({ message: "Transaction not found" });
-    res.json(txn);
+    const budgetAlert = await checkBudget(txn);
+    res.json({ ...txn.toObject(), budgetAlert });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }

@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { accountApi, categoryApi, transactionApi } from "../api/services";
 import { errMsg } from "../api/client";
-import { formatMoney, formatDate } from "../utils/format";
+import { formatMoney, formatDate, overBudgetText } from "../utils/format";
 import Modal from "../components/Modal";
 import TransactionForm from "../components/TransactionForm";
 import { Alert, Spinner, Empty } from "../components/ui";
@@ -16,6 +16,7 @@ export default function Transactions() {
   const [filters, setFilters] = useState(noFilters);
   const [error, setError] = useState("");
   const [editing, setEditing] = useState(null); // null = closed, {} = new, txn = edit
+  const [budgetAlert, setBudgetAlert] = useState(null); // set when a saved expense pushes a category over its monthly budget
 
   const loadTxns = useCallback(() => transactionApi.list(filters).then(setTxns).catch((e) => setError(errMsg(e))), [filters]);
   const loadCategories = useCallback(() => categoryApi.list().then(setCategories), []);
@@ -37,6 +38,12 @@ export default function Transactions() {
     <>
       <div className="page-head"><h1>Transactions</h1><button className="btn btn-primary" disabled={accounts.length === 0} onClick={() => setEditing({})}>+ Add transaction</button></div>
       <Alert>{error}</Alert>
+      {budgetAlert && (
+        <div className="alert alert-error budget-warning" role="alert">
+          <strong>{overBudgetText(budgetAlert)}</strong>
+          <span><Link to="/budgets" className="small-link">View budgets</Link><button className="btn btn-ghost" onClick={() => setBudgetAlert(null)} aria-label="Dismiss">✕</button></span>
+        </div>
+      )}
       {accounts.length === 0 && !error && <Alert kind="info">You need an account before adding transactions. <Link to="/accounts">Create one</Link></Alert>}
 
       <div className="card filters">
@@ -68,7 +75,7 @@ export default function Transactions() {
 
       {editing && (
         <Modal title={editing._id ? "Edit transaction" : "Add transaction"} onClose={() => setEditing(null)}>
-          <TransactionForm txn={editing._id ? editing : null} accounts={accounts} categories={categories} onCategoryAdded={loadCategories} onCancel={() => setEditing(null)} onSaved={async () => { setEditing(null); await loadTxns(); }} />
+          <TransactionForm txn={editing._id ? editing : null} accounts={accounts} categories={categories} onCategoryAdded={loadCategories} onCancel={() => setEditing(null)} onSaved={async (saved) => { setBudgetAlert(saved?.budgetAlert || null); setEditing(null); await loadTxns(); }} />
         </Modal>
       )}
     </>

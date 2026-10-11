@@ -30,7 +30,7 @@ export default function TransactionForm({ txn, accounts, categories, onCategoryA
     if (!form.categoryId) return setError("Choose a category");
     setBusy(true);
     const body = { ...form, amount: Number(form.amount), notes: form.notes.trim() };
-    try { txn ? await transactionApi.update(txn._id, body) : await transactionApi.create(body); await onSaved(); } catch (err) { setError(errMsg(err)); setBusy(false); }
+     try { const saved = txn ? await transactionApi.update(txn._id, body) : await transactionApi.create(body); await onSaved(saved); } catch (err) { setError(errMsg(err)); setBusy(false); }
   };
 
   return (

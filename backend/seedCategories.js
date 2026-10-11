@@ -8,10 +8,15 @@ const defaults = [
   ...["Salary", "Other Income"].map((name) => ({ name, type: "income", userId: null })),
 ];
 
+// Safe to run more than once: a default category that already exists is left untouched,
+// so its _id (used by existing transactions and budgets) never changes. Only missing ones are added.
 (async () => {
   await mongoose.connect(process.env.MONGO_URI);
-  await Category.deleteMany({ userId: null });
-  await Category.insertMany(defaults);
-  console.log("Seeded default categories");
+  const result = await Category.bulkWrite(
+    defaults.map((c) => ({
+      updateOne: { filter: { userId: null, name: c.name, type: c.type }, update: { $setOnInsert: c }, upsert: true },
+    }))
+  );
+  console.log(`Default categories ready (${result.upsertedCount} added, ${defaults.length - result.upsertedCount} already existed)`);
   process.exit(0);
 })();

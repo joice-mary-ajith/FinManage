@@ -12,3 +12,5 @@ export const ACCOUNT_TYPES = { cash: "Cash", bank: "Bank", credit_card: "Credit 
 export const validEmail = (e) => /^\S+@\S+\.\S+$/.test(e);
 export const validPassword = (p) => p.length >= 8 && /[A-Za-z]/.test(p) && /\d/.test(p);
 export const PASSWORD_HINT = "At least 8 characters, with a letter and a number";
+// Works for a budget row from GET /budgets and for the budgetAlert returned when an expense is saved.
+export const overBudgetText = ({ categoryName, spent, amount }) => `Over budget: ${categoryName} is ${formatMoney(spent)} of ${formatMoney(amount)}`;

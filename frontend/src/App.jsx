@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Accounts from "./pages/Accounts";
 import Transactions from "./pages/Transactions";
 import Reports from "./pages/Reports";
+import Budgets from "./pages/Budgets";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminCategories from "./pages/admin/AdminCategories";
 
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/accounts" element={<Accounts />} />
           <Route path="/transactions" element={<Transactions />} />
+          <Route path="/budgets" element={<Budgets />} />
           <Route path="/reports" element={<Reports />} />
           <Route element={<ProtectedRoute adminOnly />}>
             <Route path="/admin" element={<AdminUsers />} />
