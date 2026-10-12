@@ -26,8 +26,6 @@ const protect = async (req, res, next) => {
       });
     }
 
-    // Admin can deactivate the account.
-    // A deactivated user cannot access protected routes.
     if (!user.isActive) {
       return res.status(403).json({
         message: "Your account has been deactivated",

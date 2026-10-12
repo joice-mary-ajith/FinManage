@@ -33,7 +33,7 @@ exports.trend = async (req, res) => {
   }
 };
 
-// FR-4.4 (stretch): CSV export. Build this last.
+// CSV export
 exports.exportCsv = async (req, res) => {
   try {
     const txns = await Transaction.find({ userId: req.user._id })

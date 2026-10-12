@@ -23,10 +23,7 @@ const signToken = (id) =>
     }
   );
 
-
-// =========================
 // REGISTER
-// =========================
 
 exports.register = async (req, res) => {
   try {
@@ -57,15 +54,11 @@ exports.register = async (req, res) => {
       });
     }
 
-    // Password is hashed before storing.
     const passwordHash = await bcrypt.hash(
       password,
       10
     );
 
-    // IMPORTANT:
-    // We do NOT accept role from req.body.
-    // Every public registration creates a normal user.
     const user = await User.create({
       name,
       email: normalizedEmail,
@@ -95,10 +88,7 @@ exports.register = async (req, res) => {
   }
 };
 
-
-// =========================
 // LOGIN
-// =========================
 
 exports.login = async (req, res) => {
   try {
@@ -120,7 +110,7 @@ exports.login = async (req, res) => {
       });
     }
 
-    // Check whether admin has deactivated the user.
+    
     if (!user.isActive) {
       return res.status(403).json({
         message: "Your account has been deactivated",
@@ -157,10 +147,7 @@ exports.login = async (req, res) => {
   }
 };
 
-
-// =========================
 // CURRENT USER
-// =========================
 
 exports.getMe = (req, res) => {
   const {
@@ -180,10 +167,7 @@ exports.getMe = (req, res) => {
   });
 };
 
-
-// =========================
 // FORGOT PASSWORD - SEND OTP
-// =========================
 
 exports.forgotPassword = async (req, res) => {
   try {

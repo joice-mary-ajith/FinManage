@@ -2,7 +2,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Spinner } from "./ui";
 
-// <ProtectedRoute /> needs a logged-in user. <ProtectedRoute adminOnly /> also needs role === "admin".
+
 export default function ProtectedRoute({ adminOnly = false }) {
   const { user, loading, isAdmin } = useAuth();
   const location = useLocation();
